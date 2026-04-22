@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Membership Plans{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Choose Your Membership</h1>
+<div class="row g-4">
+    {% for package in packages %}
+    <div class="col-md-4">
+        <div class="card package-card h-100 shadow-sm">
+            <div class="card-body">
+                <h3 class="card-title text-center">{{ package.name }}</h3>
+                <div class="package-price text-center mb-3">${{ package.price }}</div>
+                <p class="text-muted text-center">{{ package.duration_days }} days</p>
+                <p><strong>Category:</strong> {{ package.category.name }}</p>
+                <p><strong>Type:</strong> {{ package.package_type.name }}</p>
+                <ul class="list-unstyled">
+                    {% for feature in package.features.splitlines %}
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>{{ feature }}</li>
+                    {% endfor %}
+                </ul>
+                <p>{{ package.description|truncatewords:20 }}</p>
+            </div>
+            <div class="card-footer bg-white border-0 text-center pb-4">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'bookings:apply' package.id %}" class="btn btn-danger">Apply Now</a>
+                {% else %}
+                    <a href="{% url 'accounts:login' %}?next={% url 'bookings:apply' package.id %}" class="btn btn-outline-danger">Login to Apply</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-center">No packages available at the moment.</p>
+    {% endfor %}
+</div>
+{% endblock %}

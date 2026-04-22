@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Trainers - Fitness First GYM{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="text-center mb-5">
+    <h1 class="display-4 fw-bold">Meet Our Expert Trainers</h1>
+    <p class="lead text-muted">Certified professionals dedicated to helping you achieve your fitness goals</p>
+</div>
+
+<!-- Trainers Grid -->
+<div class="row g-4">
+    {% if trainers %}
+        {% for trainer in trainers %}
+        <div class="col-lg-3 col-md-6">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-img-top overflow-hidden" style="height: 280px;">
+                    {% if trainer.photo %}
+                        <img src="{{ trainer.photo.url }}" class="w-100 h-100 object-fit-cover" alt="{{ trainer.user.get_full_name }}">
+                    {% else %}
+                        <img src="{% static 'img/trainers/default.jpg' %}" class="w-100 h-100 object-fit-cover" alt="Trainer">
+                    {% endif %}
+                </div>
+                <div class="card-body text-center">
+                    <h4 class="card-title mb-1">{{ trainer.user.get_full_name }}</h4>
+                    <p class="text-danger fw-semibold mb-2">{{ trainer.specialties }}</p>
+                    <p class="card-text text-muted small">{{ trainer.bio|truncatewords:20 }}</p>
+                    {% if trainer.hourly_rate %}
+                    <p class="fw-bold mt-3">${{ trainer.hourly_rate }} <span class="fw-normal text-muted">/ hour</span></p>
+                    {% endif %}
+                </div>
+                <div class="card-footer bg-white border-0 text-center pb-4">
+                    <a href="#" class="btn btn-outline-danger btn-sm rounded-pill px-4">View Profile</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <!-- Static fallback cards (displayed when no trainers in DB) -->
+        <div class="col-lg-3 col-md-6">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-img-top overflow-hidden" style="height: 280px;">
+                    <img src="{% static 'img/trainers/trainer1.jpg' %}" class="w-100 h-100 object-fit-cover" alt="John Smith">
+                </div>
+                <div class="card-body text-center">
+                    <h4 class="card-title mb-1">John Smith</h4>
+                    <p class="text-danger fw-semibold mb-2">Strength & Conditioning</p>
+                    <p class="card-text text-muted small">10+ years experience in functional training, Olympic weightlifting, and athletic performance.</p>
+                    <p class="fw-bold mt-3">$75 <span class="fw-normal text-muted">/ hour</span></p>
+                </div>
+                <div class="card-footer bg-white border-0 text-center pb-4">
+                    <a href="#" class="btn btn-outline-danger btn-sm rounded-pill px-4">View Profile</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-img-top overflow-hidden" style="height: 280px;">
+                    <img src="{% static 'img/trainers/trainer2.jpg' %}" class="w-100 h-105 object-fit-cover" alt="Sarah Johnson">
+                </div>
+                <div class="card-body text-center">
+                    <h4 class="card-title mb-1">Sarah Johnson</h4>
+                    <p class="text-danger fw-semibold mb-2">Yoga & Pilates</p>
+                    <p class="card-text text-muted small">Certified yoga instructor with a focus on flexibility, core strength, and mindfulness.</p>
+                    <p class="fw-bold mt-3">$65 <span class="fw-normal text-muted">/ hour</span></p>
+                </div>
+                <div class="card-footer bg-white border-0 text-center pb-4">
+                    <a href="#" class="btn btn-outline-danger btn-sm rounded-pill px-4">View Profile</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-img-top overflow-hidden" style="height: 280px;">
+                    <img src="{% static 'img/trainers/trainer3.jpg' %}" class="w-100 h-105 object-fit-cover" alt="Mike Chen">
+                </div>
+                <div class="card-body text-center">
+                    <h4 class="card-title mb-1">Mike Chen</h4>
+                    <p class="text-danger fw-semibold mb-2">HIIT & Cardio</p>
+                    <p class="card-text text-muted small">High-intensity interval training specialist with a passion for fat loss and endurance.</p>
+                    <p class="fw-bold mt-3">$70 <span class="fw-normal text-muted">/ hour</span></p>
+                </div>
+                <div class="card-footer bg-white border-0 text-center pb-4">
+                    <a href="#" class="btn btn-outline-danger btn-sm rounded-pill px-4">View Profile</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-img-top overflow-hidden" style="height: 280px;">
+                    <img src="{% static 'img/trainers/trainer4.jpg' %}" class="w-100 h-130 object-fit-cover" alt="Emily Rodriguez">
+                </div>
+                <div class="card-body text-center">
+                    <h4 class="card-title mb-1">Emily Rodriguez</h4>
+                    <p class="text-danger fw-semibold mb-2">Nutrition & Wellness</p>
+                    <p class="card-text text-muted small">Holistic health coach specializing in nutrition planning and lifestyle transformation.</p>
+                    <p class="fw-bold mt-3">$80 <span class="fw-normal text-muted">/ hour</span></p>
+                </div>
+                <div class="card-footer bg-white border-0 text-center pb-4">
+                    <a href="#" class="btn btn-outline-danger btn-sm rounded-pill px-4">View Profile</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<!-- CTA Section -->
+<div class="text-center mt-5 p-5 bg-light rounded-3">
+    <h3 class="fw-bold">Ready to Start Your Journey?</h3>
+    <p class="text-muted">Book a session with one of our trainers today!</p>
+    <a href="{% url 'core:contact' %}" class="btn btn-danger btn-lg px-4">Contact Us</a>
+</div>
+{% endblock %}

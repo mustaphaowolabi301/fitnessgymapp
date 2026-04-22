@@ -1,0 +1,54 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Preview Email{% endblock %}
+
+{% block content %}
+<h1>Preview Email Campaign</h1>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Recipients: {{ recipent_count }}</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Filter:</strong> {{ form.cleaned_data.recipient_filter }}</p>
+                <p><strong>Sample emails (first 5):</strong></p>
+                <ul>
+                    {% for email in sample_emails %}
+                        <li>{{ email }}</li>
+                    {% empty %}
+                        <li>No recipients found.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Email Content</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Subject:</strong> {{ subject }}</p>
+                <p><strong>Body:</strong></p>
+                <div class="border p-3 bg-light">{{ body|linebreaks }}</div>
+            </div>
+            <div class="card-footer">
+                <form method="post">
+                    {% csrf_token %}
+                    <!-- Hidden fields to resubmit form data -->
+                    <input type="hidden" name="recipient_filter" value="{{ form.cleaned_data.recipient_filter }}">
+                    <input type="hidden" name="package" value="{{ form.cleaned_data.package.id|default:'' }}">
+                    <input type="hidden" name="subject" value="{{ subject }}">
+                    <input type="hidden" name="body" value="{{ body }}">
+                    <input type="hidden" name="send" value="true">
+                    <button type="submit" class="btn btn-success" {% if recipent_count == 0 %}disabled{% endif %}>
+                        Send to {{ recipent_count }} Recipients
+                    </button>
+                    <a href="{% url 'dashboard:email_compose' %}" class="btn btn-secondary">Edit</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

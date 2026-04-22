@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Booking Details{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <!-- Sidebar -->
+        <div class="dashboard-sidebar p-3 text-white rounded">
+            <h5 class="mb-4">Member Menu</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:profile' %}">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:profile_update' %}">Edit Profile</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:password_change' %}">Change Password</a></li>
+                <li class="nav-item"><a class="nav-link active" href="{% url 'bookings:history' %}">Booking History</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'classes:my_classes' %}">My Classes</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header bg-light">
+                <h4 class="mb-0">Booking #{{ booking.id }}</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Package:</dt>
+                    <dd class="col-sm-9">{{ booking.package.name }}</dd>
+                    <dt class="col-sm-3">Start Date:</dt>
+                    <dd class="col-sm-9">{{ booking.start_date }}</dd>
+                    <dt class="col-sm-3">End Date:</dt>
+                    <dd class="col-sm-9">{{ booking.end_date }}</dd>
+                    <dt class="col-sm-3">Total Amount:</dt>
+                    <dd class="col-sm-9">${{ booking.total_amount }}</dd>
+                    <dt class="col-sm-3">Paid Amount:</dt>
+                    <dd class="col-sm-9">${{ booking.paid_amount }}</dd>
+                    <dt class="col-sm-3">Balance Due:</dt>
+                    <dd class="col-sm-9">${{ booking.balance_due }}</dd>
+                    <dt class="col-sm-3">Status:</dt>
+                    <dd class="col-sm-9"><span class="badge bg-info">{{ booking.get_status_display }}</span></dd>
+                </dl>
+                
+                <h5 class="mt-4">Payment History</h5>
+                {% if payments %}
+                <table class="table table-sm">
+                    <thead>
+                        <tr><th>Date</th><th>Amount</th><th>Mode</th><th>Transaction ID</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for payment in payments %}
+                        <tr>
+                            <td>{{ payment.payment_date|date:"M d, Y H:i" }}</td>
+                            <td>${{ payment.amount }}</td>
+                            <td>{{ payment.get_payment_mode_display }}</td>
+                            <td>{{ payment.transaction_id|default:"-" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>No payments recorded yet.</p>
+                {% endif %}
+                
+                {% if booking.balance_due > 0 %}
+                <div class="alert alert-warning mt-3">
+                    <i class="bi bi-exclamation-triangle"></i> You have an outstanding balance of ${{ booking.balance_due }}. Please visit the gym to complete payment.
+                </div>
+                {% endif %}
+                
+                <a href="{% url 'bookings:history' %}" class="btn btn-secondary">Back to History</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

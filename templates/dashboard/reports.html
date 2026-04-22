@@ -1,0 +1,38 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Reports - Fitness First Admin{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Generate Reports</h1>
+
+<div class="card">
+    <div class="card-body">
+        <form method="get" action="{% url 'dashboard:reports_results' %}" class="row g-3">
+            <div class="col-md-4">
+                <label for="report_type" class="form-label">Report Type</label>
+                <select name="report_type" id="report_type" class="form-select">
+                    <option value="bookings">Bookings Report</option>
+                    <option value="users">Registered Users Report</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="start_date" class="form-label">Start Date</label>
+                <input type="date" name="start_date" id="start_date" class="form-control" 
+                       value="{{ start_date|date:'Y-m-d' }}" required>
+            </div>
+            <div class="col-md-3">
+                <label for="end_date" class="form-label">End Date</label>
+                <input type="date" name="end_date" id="end_date" class="form-control" 
+                       value="{{ end_date|date:'Y-m-d' }}" required>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" name="generate" class="btn btn-primary w-100">Generate</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="mt-4">
+    <p>Select a report type and date range, then click Generate to view the report. You can also export to CSV from the results page.</p>
+</div>
+{% endblock %}

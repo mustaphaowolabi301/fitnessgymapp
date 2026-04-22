@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}My Dashboard{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="dashboard-sidebar p-3 text-white rounded">
+            <h5 class="mb-4">Member Menu</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'accounts:profile' %}">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'accounts:profile_update' %}">
+                        <i class="bi bi-person"></i> Edit Profile
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'accounts:password_change' %}">
+                        <i class="bi bi-key"></i> Change Password
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'bookings:history' %}">
+                        <i class="bi bi-calendar-check"></i> Booking History
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'classes:my_classes' %}">
+                        <i class="bi bi-calendar-event"></i> My Classes
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'classes:schedule' %}">
+                        <i class="bi bi-calendar-plus"></i> Class Schedule
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header bg-light">
+                <h4 class="mb-0">Welcome, {{ user.first_name }}!</h4>
+            </div>
+            <div class="card-body">
+                <h5>Your Information</h5>
+                <table class="table table-borderless">
+                    <tr><th>Name:</th><td>{{ user.get_full_name }}</td></tr>
+                    <tr><th>Email:</th><td>{{ user.email }}</td></tr>
+                    <tr><th>Phone:</th><td>{{ user.phone|default:"Not provided" }}</td></tr>
+                    <tr><th>Member Since:</th><td>{{ user.date_joined|date:"F j, Y" }}</td></tr>
+                </table>
+                
+                <h5 class="mt-4">Current Membership</h5>
+                {% with active_booking=user.bookings.all %}
+                    {% for booking in active_booking %}
+                        {% if booking.status == 'active' or booking.status == 'confirmed' %}
+                            <p><strong>{{ booking.package.name }}</strong> (Expires: {{ booking.end_date }})</p>
+                            <div class="progress mb-3" style="height: 20px;">
+                                {% widthratio booking.paid_amount booking.total_amount 100 as paid_percent %}
+                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ paid_percent }}%;" 
+                                     aria-valuenow="{{ paid_percent }}" aria-valuemin="0" aria-valuemax="100">
+                                    {{ paid_percent }}% Paid
+                                </div>
+                            </div>
+                            <p><strong>Total:</strong> ${{ booking.total_amount }} | 
+                               <strong>Paid:</strong> ${{ booking.paid_amount }} | 
+                               <strong>Balance:</strong> ${{ booking.balance_due }}</p>
+                        {% endif %}
+                    {% empty %}
+                        <p>No active membership. <a href="{% url 'core:plans' %}">View plans</a></p>
+                    {% endfor %}
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

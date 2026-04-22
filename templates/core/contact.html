@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Get In Touch</h1>
+<div class="row">
+    <div class="col-md-6">
+        <h4>Send us a message</h4>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-danger">Submit Inquiry</button>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <h4>Visit Us</h4>
+        <p><i class="bi bi-geo-alt-fill"></i> 123 Fitness Street, Wellness City, FC 12345</p>
+        <p><i class="bi bi-telephone-fill"></i> (555) 123-4567</p>
+        <p><i class="bi bi-envelope-fill"></i> info@fitnessfirstgym.com</p>
+        <h5 class="mt-4">Hours of Operation</h5>
+        <ul class="list-unstyled">
+            <li>Monday - Friday: 5:00 AM - 11:00 PM</li>
+            <li>Saturday: 7:00 AM - 9:00 PM</li>
+            <li>Sunday: 8:00 AM - 8:00 PM</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

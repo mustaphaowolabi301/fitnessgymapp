@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Apply for {{ package.name }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-danger text-white">
+                <h3 class="mb-0">Apply for Membership</h3>
+            </div>
+            <div class="card-body">
+                <h4>{{ package.name }}</h4>
+                <p><strong>Price:</strong> ${{ package.price }}</p>
+                <p><strong>Duration:</strong> {{ package.duration_days }} days</p>
+                <hr>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="alert alert-info">
+                        <strong>Total Amount:</strong> ${{ package.price }}
+                    </div>
+                    <button type="submit" class="btn btn-danger">Submit Application</button>
+                    <a href="{% url 'core:plans' %}" class="btn btn-outline-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

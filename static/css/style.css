@@ -1,0 +1,94 @@
+/* Fitness First GYM Custom Styles */
+
+:root {
+    --primary-color: #e63946;
+    --secondary-color: #1d3557;
+    --dark-bg: #111;
+    --light-bg: #f8f9fa;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('../img/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 120px 0;
+}
+
+/* Package Cards */
+.package-card {
+    transition: transform 0.3s;
+    height: 100%;
+}
+
+.package-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.package-price {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Trainer Cards */
+.trainer-card img {
+    height: 250px;
+    object-fit: cover;
+}
+
+/* Dashboard Sidebar */
+.dashboard-sidebar {
+    background: var(--secondary-color);
+    min-height: calc(100vh - 56px);
+}
+
+.dashboard-sidebar .nav-link {
+    color: rgba(255,255,255,0.8);
+    padding: 12px 20px;
+}
+
+.dashboard-sidebar .nav-link:hover,
+.dashboard-sidebar .nav-link.active {
+    color: white;
+    background: rgba(255,255,255,0.1);
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+}footer a.text-muted:hover {
+    color: var(--primary-color) !important;
+    transition: color 0.3s ease;
+}
+
+footer .bi-facebook:hover { color: #1877f2 !important; }
+footer .bi-instagram:hover { color: #e4405f !important; }
+footer .bi-twitter-x:hover { color: #000000 !important; }
+footer .bi-youtube:hover { color: #ff0000 !important; }
+.object-fit-cover {
+    object-fit: cover;
+}.object-fit-cover {
+    object-fit: cover;
+}
+
+.opacity-50 {
+    opacity: 0.5;
+}
+
+.card-img-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+}

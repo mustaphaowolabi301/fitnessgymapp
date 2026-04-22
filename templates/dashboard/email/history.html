@@ -1,0 +1,33 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Email History{% endblock %}
+
+{% block content %}
+<h1>Sent Email Campaigns</h1>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Recipients</th>
+                <th>Sent By</th>
+                <th>Sent At</th>
+                <th>Filter</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for campaign in campaigns %}
+            <tr>
+                <td>{{ campaign.subject }}</td>
+                <td>{{ campaign.recipient_count }}</td>
+                <td>{{ campaign.sent_by.get_full_name|default:campaign.sent_by.email }}</td>
+                <td>{{ campaign.sent_at|date:"M d, Y H:i" }}</td>
+                <td>{{ campaign.filter_criteria.recipient_filter }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">No campaigns sent yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

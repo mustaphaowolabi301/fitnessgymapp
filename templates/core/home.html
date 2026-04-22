@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Welcome to Fitness First GYM{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section text-center">
+    <div class="container">
+        <h1 class="display-3 fw-bold mb-4">Transform Your Body, Transform Your Life</h1>
+        <p class="lead mb-4">Join Fitness First GYM and achieve your fitness goals with state-of-the-art equipment and expert trainers.</p>
+        <a href="{% url 'core:plans' %}" class="btn btn-danger btn-lg me-3">View Membership Plans</a>
+        <a href="{% url 'accounts:register' %}" class="btn btn-outline-light btn-lg">Join Now</a>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Why Choose Fitness First?</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-gear-wide-connected fs-1 text-danger"></i>
+                        <h4 class="mt-3">Modern Equipment</h4>
+                        <p>Top-of-the-line machines and free weights for all fitness levels.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-people fs-1 text-danger"></i>
+                        <h4 class="mt-3">Expert Trainers</h4>
+                        <p>Certified personal trainers to guide you every step of the way.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-calendar-check fs-1 text-danger"></i>
+                        <h4 class="mt-3">Flexible Classes</h4>
+                        <p>Wide variety of group classes from yoga to high-intensity interval training.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Packages -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Featured Membership Plans</h2>
+        <div class="row g-4">
+            {% for package in featured_packages %}
+            <div class="col-md-4">
+                <div class="card package-card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">{{ package.name }}</h3>
+                        <div class="package-price text-center mb-3">${{ package.price }}</div>
+                        <p class="text-muted text-center">{{ package.duration_days }} days</p>
+                        <ul class="list-unstyled">
+                            {% for feature in package.features.splitlines %}
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>{{ feature }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-white border-0 text-center pb-4">
+                        <a href="{% url 'bookings:apply' package.id %}" class="btn btn-danger">Select Plan</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center">No packages available at the moment.</p>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'core:plans' %}" class="btn btn-outline-danger">View All Plans</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

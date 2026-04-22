@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Booking History{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <!-- Sidebar same as profile -->
+        <div class="dashboard-sidebar p-3 text-white rounded">
+            <h5 class="mb-4">Member Menu</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:profile' %}">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:profile_update' %}">Edit Profile</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:password_change' %}">Change Password</a></li>
+                <li class="nav-item"><a class="nav-link active" href="{% url 'bookings:history' %}">Booking History</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'classes:my_classes' %}">My Classes</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">My Bookings</h4>
+                <a href="{% url 'core:plans' %}" class="btn btn-sm btn-danger">Apply New</a>
+            </div>
+            <div class="card-body">
+                {% if bookings %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Package</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Total</th>
+                                <th>Paid</th>
+                                <th>Balance</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for booking in bookings %}
+                            <tr>
+                                <td>{{ booking.package.name }}</td>
+                                <td>{{ booking.start_date }}</td>
+                                <td>{{ booking.end_date }}</td>
+                                <td>${{ booking.total_amount }}</td>
+                                <td>${{ booking.paid_amount }}</td>
+                                <td>${{ booking.balance_due }}</td>
+                                <td>
+                                    <span class="badge {% if booking.status == 'active' %}bg-success{% elif booking.status == 'pending' %}bg-warning{% elif booking.status == 'cancelled' %}bg-danger{% else %}bg-secondary{% endif %}">
+                                        {{ booking.get_status_display }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="{% url 'bookings:detail' booking.id %}" class="btn btn-sm btn-outline-primary">View</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p>You have no bookings yet. <a href="{% url 'core:plans' %}">Browse membership plans</a>.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">About Fitness First GYM</h1>
+<div class="row">
+    <div class="col-md-6">
+        <p class="lead">Established in 2010, Fitness First GYM has been the premier destination for health and fitness enthusiasts in the community.</p>
+        <p>Our mission is to provide a welcoming and motivating environment where members of all fitness levels can achieve their personal goals. We believe in holistic wellness – combining physical training, nutritional guidance, and mental well-being.</p>
+        <h3 class="mt-4">Our Facilities</h3>
+        <ul>
+            <li>10,000 sq ft of workout space</li>
+            <li>Cardio zone with 50+ machines</li>
+            <li>Free weights area</li>
+            <li>Group exercise studio</li>
+            <li>Personal training suites</li>
+            <li>Locker rooms with sauna</li>
+        </ul>
+    </div>
+    
+    <div class="col-md-6">  
+        <img src="{% static 'img/img1.jpg' %}" alt="Gym Interior" class="img-fluid rounded">
+    </div>
+</div>
+
+<br><br><br>
+
+<h1 class="mb-4">About the CEO</h1>
+<div class="row">
+    <div class="col-md-6">
+        <p class="lead">At the heart of our gym is a passionate leader who believes fitness is more than just exercise — it is a lifestyle, a mindset, and a path to becoming the best version of yourself.</p>
+        <p>Our CEO, Daniel Carter, founded the gym with a simple vision: to create a welcoming environment where people of all fitness levels can feel inspired, supported, and motivated.With over 15 years of experience in the health and fitness industry, Daniel has dedicated his career to helping others achieve their goals and build confidence through fitness.</p>
+        <p>What started as a small dream quickly grew into a thriving fitness community built on commitment, discipline, and personal growth. Daniel’s leadership is driven by his belief that every member deserves access to high-quality equipment, expert guidance, and a positive atmosphere.</p>
+        <p>Under his direction, the gym has become more than just a place to work out — it is a place where friendships are built, goals are achieved, and lives are transformed.
+Daniel continues to lead with energy, passion, and a commitment to helping every member succeed on their fitness journey.</p>
+    </div>
+    
+    <div class="col-md-6">  
+        <img src="{% static 'img/img2.jpg' %}" alt="Gym Interior" class="img-fluid rounded">
+    </div>
+</div>
+{% endblock %}

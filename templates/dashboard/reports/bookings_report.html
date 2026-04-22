@@ -1,0 +1,18 @@
+<table class="table table-bordered">
+    <tr>
+        <th>Total Bookings</th>
+        <td>{{ total_bookings }}</td>
+    </tr>
+    <tr>
+        <th>Total Revenue (Booked)</th>
+        <td>${{ total_revenue|floatformat:2 }}</td>
+    </tr>
+    <tr>
+        <th>Total Paid</th>
+        <td>${{ total_paid|floatformat:2 }}</td>
+    </tr>
+    <tr>
+        <th>Pending Amount</th>
+        <td>${{ total_pending|floatformat:2 }}</td>
+    </tr>
+</table>

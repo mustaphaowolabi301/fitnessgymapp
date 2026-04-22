@@ -1,0 +1,33 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}POS - Receipt{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4>Transaction Complete</h4>
+            </div>
+            <div class="card-body" id="receipt-content">
+                <h5 class="text-center">Fitness First GYM</h5>
+                <p class="text-center">Receipt #{{ booking.id }}</p>
+                <hr>
+                <p><strong>Member:</strong> {{ booking.member.get_full_name }}</p>
+                <p><strong>Package:</strong> {{ booking.package.name }}</p>
+                <p><strong>Start Date:</strong> {{ booking.start_date }}</p>
+                <p><strong>End Date:</strong> {{ booking.end_date }}</p>
+                <p><strong>Amount Paid:</strong> ${{ booking.paid_amount }}</p>
+                <p><strong>Payment Mode:</strong> {{ booking.payments.first.get_payment_mode_display }}</p>
+                <p><strong>Date:</strong> {% now "M d, Y H:i" %}</p>
+                <hr>
+                <p class="text-center">Thank you for choosing Fitness First!</p>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary" onclick="window.print()">Print Receipt</button>
+                <a href="{% url 'dashboard:pos' %}" class="btn btn-secondary">New Transaction</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
